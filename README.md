@@ -1,4 +1,4 @@
-# keycloak-ip-authenticator
+# Keycloak IP authenticator
 
 Keycloak Authenticator that checks if the user is coming from a trusted network
 or not. This authenticator does the check only if the user has an attribute
