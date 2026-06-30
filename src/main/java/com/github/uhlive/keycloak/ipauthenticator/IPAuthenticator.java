@@ -21,21 +21,28 @@ public class IPAuthenticator implements Authenticator {
         KeycloakSession session = context.getSession();
         RealmModel realm = context.getRealm();
         UserModel user = context.getUser();
-
-        // TODO: get the attribute value to look for from the authenticator config
-        List<String> ipAddresses = user.getAttributeStream(IP_ADDRESSES_ATTRIBUTE).toList();
-        for (String ip : ipAddresses) {
-            logger.infof("Attribute value %s", ip);
-        }
-        // TODO: if no address in user attributes => success
+        String username = user.getUsername();
         String remoteIPAddress = context.getConnection().getRemoteAddr();
-        logger.infof("********** Realm %s, user %s logged from %s", realm.getName(), user.getUsername(), remoteIPAddress);
-        if (ipAddresses.contains(remoteIPAddress)) {
-            logger.infof("Remote IP %s match", remoteIPAddress);
+
+        // TODO: get the attribute name from the authenticator config instea dof hard coded
+        // TODO: get  attributes inherited from groups
+        List<String> ipAddresses = user.getAttributeStream(IP_ADDRESSES_ATTRIBUTE).toList();
+
+        if (ipAddresses.isEmpty()) {
+            // No IP address restriction
+            logger.debugf("No IP address restriction setup for user=%s, remoteIP=%s", username, remoteIPAddress);
             context.success();
+            return;
         }
 
-        logger.info("################# ACCESS DENIED ################");
+        ipAddresses.forEach(ip -> logger.debugf("allowedIP=%s", ip));
+        if (ipAddresses.contains(remoteIPAddress)) {
+            logger.infof("Access granted for user=%s, remoteIP=%s is allowed", username, remoteIPAddress);
+            context.success();
+            return;
+        }
+
+        logger.infof("Access denied for user=%s, remoteIP=%s is not allowed", username, remoteIPAddress);
         context.failure(AuthenticationFlowError.ACCESS_DENIED);
     }
 
