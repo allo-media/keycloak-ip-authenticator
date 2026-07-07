@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <keycloak.version>25.0.6</keycloak.version>
+        <keycloak.version>26.6.4</keycloak.version>
         <jboss-jaxrs-api_2.1_spec>2.0.1.Final</jboss-jaxrs-api_2.1_spec>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

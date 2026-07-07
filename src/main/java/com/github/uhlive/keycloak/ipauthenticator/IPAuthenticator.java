@@ -24,8 +24,7 @@ public class IPAuthenticator implements Authenticator {
         String username = user.getUsername();
         String remoteIPAddress = context.getConnection().getRemoteAddr();
 
-        // TODO: get the attribute name from the authenticator config instea dof hard coded
-        // TODO: get  attributes inherited from groups
+        // Get  allowed IP adresses from user attributes
         List<String> ipAddresses = user.getAttributeStream(IP_ADDRESSES_ATTRIBUTE).toList();
 
         if (ipAddresses.isEmpty()) {
