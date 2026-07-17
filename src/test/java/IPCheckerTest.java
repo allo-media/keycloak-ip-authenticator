@@ -53,6 +53,12 @@ class IPCheckerTests {
 	}
 
 	@Test
+	void outsideMultipleAllowedIPRange() {
+		IPChecker checker = new IPChecker(List.of("5.6.7.8", "1.2.4.0-5", "9.9.9.0-120"));
+		assertFalse(checker.isAllowed(remoteIPAddress));
+	}
+
+	@Test
 	void allowedIPPlusInvalidAllowedIPRestrictAccess() {
 		IPChecker checker = new IPChecker(List.of("invalid", "1.2.3.4"));
 		assertTrue(checker.isAllowed(remoteIPAddress));
