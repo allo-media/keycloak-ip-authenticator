@@ -1,7 +1,5 @@
 package com.github.uhlive.keycloak.ipauthenticator;
 
-import static org.keycloak.provider.ProviderConfigProperty.STRING_TYPE;
-
 import java.util.Collections;
 import java.util.List;
 

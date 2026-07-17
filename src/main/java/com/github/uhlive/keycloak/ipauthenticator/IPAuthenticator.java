@@ -18,13 +18,13 @@ public class IPAuthenticator implements Authenticator {
 
     @Override
     public void authenticate(AuthenticationFlowContext context) {
-        KeycloakSession session = context.getSession();
-        RealmModel realm = context.getRealm();
         UserModel user = context.getUser();
         String username = user.getUsername();
         String remoteIPAddress = context.getConnection().getRemoteAddr();
 
         // Get  allowed IP adresses from user attributes
+        // TODO: convert to a list of IPAddress
+        // TODO: what happens if not an ip address?
         List<String> ipAddresses = user.getAttributeStream(IP_ADDRESSES_ATTRIBUTE).toList();
 
         if (ipAddresses.isEmpty()) {
@@ -35,6 +35,7 @@ public class IPAuthenticator implements Authenticator {
         }
 
         ipAddresses.forEach(ip -> logger.debugf("allowedIP=%s", ip));
+        // TODO: if any IPrange contains the ipaddress, then return context.success()
         if (ipAddresses.contains(remoteIPAddress)) {
             logger.infof("Access granted for user=%s, remoteIP=%s is allowed", username, remoteIPAddress);
             context.success();
