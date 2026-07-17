@@ -11,7 +11,7 @@ public class IPChecker {
         this.allowedIPs = allowedIPs;
     }
 
-    public boolean is_allowed(String remoteIPAddress) {
+    public boolean isAllowed(String remoteIPAddress) {
         if (this.allowedIPs.isEmpty()) {
             // No restriction
             return true;

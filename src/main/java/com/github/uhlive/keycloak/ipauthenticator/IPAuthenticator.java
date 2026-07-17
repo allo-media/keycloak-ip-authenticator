@@ -23,10 +23,7 @@ public class IPAuthenticator implements Authenticator {
         String remoteIPAddress = context.getConnection().getRemoteAddr();
 
         // Get  allowed IP adresses from user attributes
-        // TODO: convert to a list of IPAddress
-        // TODO: what happens if not an ip address?
         List<String> ipAddresses = user.getAttributeStream(IP_ADDRESSES_ATTRIBUTE).toList();
-
         if (ipAddresses.isEmpty()) {
             // No IP address restriction
             logger.debugf("No IP address restriction setup for user=%s, remoteIP=%s", username, remoteIPAddress);
@@ -35,8 +32,8 @@ public class IPAuthenticator implements Authenticator {
         }
 
         ipAddresses.forEach(ip -> logger.debugf("allowedIP=%s", ip));
-        // TODO: if any IPrange contains the ipaddress, then return context.success()
-        if (ipAddresses.contains(remoteIPAddress)) {
+        IPChecker ipChecker = new IPChecker(ipAddresses);
+        if (ipChecker.isAllowed(remoteIPAddress)) {
             logger.infof("Access granted for user=%s, remoteIP=%s is allowed", username, remoteIPAddress);
             context.success();
             return;
