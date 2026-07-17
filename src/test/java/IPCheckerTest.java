@@ -23,4 +23,11 @@ class IPCheckerTests {
 		List<String> allowedIPs = List.of("2.2.2.2");
 		assertFalse(checker.is_allowed(allowedIPs, remoteIPAddress));
 	}
+
+	@Test
+	void oneAllowedIP() {
+		IPChecker checker = new IPChecker();
+		List<String> allowedIPs = List.of("1.2.3.4");
+		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+	}
 }

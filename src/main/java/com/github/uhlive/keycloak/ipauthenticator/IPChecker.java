@@ -8,6 +8,9 @@ public class IPChecker {
         if (ipAddresses.isEmpty()) {
             return true;
         }
+        if (ipAddresses.getFirst().equals(remoteIPAddress)) {
+            return true;
+        }
         return false;
     }
 }
