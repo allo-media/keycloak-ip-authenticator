@@ -12,64 +12,55 @@ class IPCheckerTests {
 
 	@Test
 	void emptyAllowedIPs() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of();
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of());
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void notAllowedIPs() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("2.2.2.2");
-		assertFalse(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("2.2.2.2"));
+		assertFalse(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void oneAllowedIP() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("1.2.3.4");
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("1.2.3.4"));
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void multipleAllowedIPs() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("2.2.2.2", "1.2.3.4", "3.3.3.3");
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("2.2.2.2", "1.2.3.4", "3.3.3.3"));
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void oneAllowedIPRange() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("1.2.3.0-5");
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("1.2.3.0-5"));
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void multipleAllowedIPRange() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("5.6.7.8", "1.2.3.0-5", "9.9.9.0-120");
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("5.6.7.8", "1.2.3.0-5", "9.9.9.0-120"));
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void allowedIPWildcard() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("1.2.3.*");
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("1.2.3.*"));
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void allowedIPPlusInvalidAllowedIPRestrictAccess() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("invalid", "1.2.3.4");
-		assertTrue(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("invalid", "1.2.3.4"));
+		assertTrue(checker.is_allowed(remoteIPAddress));
 	}
 
 	@Test
 	void invalidSingleAllowedIPRestrictAccess() {
-		IPChecker checker = new IPChecker();
-		List<String> allowedIPs = List.of("invalid");
-		assertFalse(checker.is_allowed(allowedIPs, remoteIPAddress));
+		IPChecker checker = new IPChecker(List.of("invalid"));
+		assertFalse(checker.is_allowed(remoteIPAddress));
 	}
 }
