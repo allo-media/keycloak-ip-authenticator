@@ -1,9 +1,16 @@
 # Keycloak IP authenticator
 
 Keycloak Authenticator that checks if the user is coming from a trusted network
-or not. This authenticator does the check only if the user has an attribute
+or not. This authenticator does the check if the user or group has an attribute
 `allowed_ips`. If so, the user is authenticated only if its IP is contained in
 the allow list.
+
+The format supported for the allowed IP follows those from
+[`IPAddressString`](https://seancfoley.github.io/IPAddress/IPAddress/apidocs/inet/ipaddr/IPAddressString.html).
+For example:
+
+- 1.*.2-3.4
+- 1.2.3.4/255.255.0.0
 
 ## Build
 
