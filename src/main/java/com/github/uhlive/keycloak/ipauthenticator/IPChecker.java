@@ -1,13 +1,13 @@
 package com.github.uhlive.keycloak.ipauthenticator;
 
-import java.util.List;
+import java.util.Collection;
 
 import inet.ipaddr.IPAddressString;
 
 public class IPChecker {
-    private List<String> allowedIPs;
+    private Collection<String> allowedIPs;
 
-    public IPChecker(List<String> allowedIPs) {
+    public IPChecker(Collection<String> allowedIPs) {
         this.allowedIPs = allowedIPs;
     }
 
