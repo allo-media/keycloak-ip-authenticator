@@ -1,6 +1,6 @@
 package com.github.uhlive.keycloak.ipauthenticator;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.jboss.logging.Logger;
 import org.keycloak.authentication.AuthenticationFlowContext;
@@ -9,6 +9,7 @@ import org.keycloak.authentication.Authenticator;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.models.UserModel;
+import org.keycloak.models.utils.KeycloakModelUtils;
 
 public class IPAuthenticator implements Authenticator {
 
@@ -22,8 +23,8 @@ public class IPAuthenticator implements Authenticator {
         String username = user.getUsername();
         String remoteIPAddress = context.getConnection().getRemoteAddr();
 
-        // Get  allowed IP adresses from user attributes
-        List<String> ipAddresses = user.getAttributeStream(IP_ADDRESSES_ATTRIBUTE).toList();
+        // Get allowed IP adresses from user and group attributes
+        Collection<String> ipAddresses = KeycloakModelUtils.resolveAttribute(user, IP_ADDRESSES_ATTRIBUTE, true);
         if (ipAddresses.isEmpty()) {
             // No IP address restriction
             logger.debugf("No IP address restriction setup for user=%s, remoteIP=%s", username, remoteIPAddress);
